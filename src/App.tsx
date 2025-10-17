@@ -4,11 +4,15 @@ import { ResumeUpload } from './components/ResumeUpload';
 import { JobDescriptionForm } from './components/JobDescriptionForm';
 import { ResultsDisplay } from './components/ResultsDisplay';
 import { ThemeToggle } from './components/ThemeToggle';
+import { HomePage } from './components/HomePage';
+import { UserProfile } from './components/UserProfile';
+import { useAuth } from './hooks/useAuth';
 import type { ResumeData, JobDescription, TailoredResume } from './types/index';
 import { resumeService } from './services/resumeService';
 import './App.css';
 
 function App() {
+  const { user, loading } = useAuth();
   const [resume, setResume] = useState<ResumeData>({
     imageFile: null,
     imagePreview: null,
@@ -102,9 +106,35 @@ function App() {
     setLoadingProgress(0);
   };
 
+  if (loading) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <div className='loading-spinner-container'>
+          <div className='loading-spinner-glow'></div>
+          <div className='loading-spinner'></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <>
+        <ThemeToggle />
+        <HomePage />
+      </>
+    );
+  }
+
   return (
     <div className='app-container'>
       <ThemeToggle />
+      <UserProfile />
       <header className='app-header'>
         <h1>✨ Resume Helper</h1>
         <p>Tailor your resume for specific job opportunities using AI</p>

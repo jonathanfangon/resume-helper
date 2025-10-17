@@ -184,22 +184,22 @@
   color: var(--text-tertiary);
 }
 
+.step-circle::before {
+  content: attr(data-step);
+}
+
 .step.active .step-circle {
-  background: var(--primary-gradient);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  border-color: transparent;
+  border: none;
   transform: scale(1.1);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 8px 20px -5px rgba(102, 126, 234, 0.4);
 }
 
 .step.completed .step-circle {
-  background: var(--success-color);
-  border-color: transparent;
+  background: #48bb78;
+  border: none;
   color: white;
-}
-
-.step-circle::before {
-  content: attr(data-step);
 }
 
 .step.completed .step-circle::before {
